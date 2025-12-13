@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>テンパズル ソルバー</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="main.js"></script>
+</head>
+<body>
+	<form id="input">
+		<div>
+			<input type="text" id="nums" placeholder="1,1,5,8">
+			<span>と</span>
+		</div>
+		<div>
+			<input type="text" id="opes" value="+ - * /" readonly>
+			<select id="opes-select" class="hidden" multiple>
+				<option value="+" selected>+ (加算)</option>
+				<option value="-" selected>- (減算)</option>
+				<option value="*" selected>* (乗算)</option>
+				<option value="/" selected>/ (除算)</option>
+				<option value="%">% (剰余)</option>
+				<option value="^">^ (冪乗)</option>
+			</select>
+			<span>で</span>
+		</div>
+		<div>
+			<input type="number" id="result" value="10" onwheel>
+			<span>を</span>
+			<input type="submit" id="exec" value="作る" class="button">
+			<input type="button" id="stop" value="中断" class="button hidden">
+		</div>
+		<div>
+			<select id="sortable">
+				<option value="1">並べ替えあり</option>
+				<option value="0">並べ替えなし</option>
+			</select>
+			<select id="limit">
+				<option value="one">一つの解を表示</option>
+				<option value="all">全ての解を表示</option>
+			</select>
+		</div>
+	</form>
+	<hr>
+	<div id="output">
+		<div id="message"></div>
+		<ul id="solution"></ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+* {
+	font-size: 18px;
+}
+body {
+	width: max-content;
+}
+input {
+	outline: none;
+}
+input, select {
+	height: 30px;
+	box-sizing: border-box;
+}
+.button {
+	cursor: pointer;
+}
+.hidden {
+	display: none;
+}
+.invisible {
+	visibility: hidden;
+}
+#input {
+	> div {
+		gap: 6px;
+		height: 34px;
+		display: flex;
+		position: relative;
+		align-items: center;
+	}
+}
+#nums, #opes, #opes-select, #result {
+	width: 160px;
+}
+#opes-select {
+	top: 0px;
+	height: auto;
+	z-index: 1;
+	position: absolute;
+	option {
+		font-family: Consolas, monospace;
+	}
+}
+#solution {
+	margin: 0px;
+	padding: 0px;
+	font-family: Consolas, monospace;
+	li {
+		font-size: 20px;
+		list-style: none;
+	}
+}
