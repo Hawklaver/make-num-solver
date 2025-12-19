@@ -2,13 +2,38 @@ self.addEventListener("message", e => {
 
 	const { nums, opes, result, sortable, limit } = e.data;
 	const numsPerm = sortable ? permutation(nums) : [nums];
+	const opesPermLength = (opes.length - 1) ** (nums.length - 1);
+	const exprPermLength = exprPatterns(nums.length, nums.length - 1).length;
+	const exprTotalCount = numsPerm.length * opesPermLength * exprPermLength;
 	const solutions = [];
+	let exprCount = 0;
 	for (const nums of numsPerm) {
 		if (traverse(nums, result, limit)) {
 			break;
 		}
 	}
 	self.postMessage({ complete: true });
+
+	// 逆ポーランド記法の式を全パターン生成 (数字と演算子の位置のみ)
+	function exprPatterns(numCount, opeCount) {
+		if (numCount === 0 && opeCount === 1) {
+			return ["o"];
+		}
+		const result = [];
+		if (0 < numCount) {
+			const perms = exprPatterns(numCount - 1, opeCount);
+			perms.forEach(perm => {
+				result.push(["n", ...perm]);
+			});
+		}
+		if (numCount < opeCount) {
+			const perms = exprPatterns(numCount, opeCount - 1);
+			perms.forEach(perm => {
+				result.push(["o", ...perm]);
+			});
+		}
+		return result;
+	}
 
 	// 再帰で配列の順列を生成
 	function permutation(arr) {
@@ -31,6 +56,7 @@ self.addEventListener("message", e => {
 	// 再帰で全パターンの数式を走査
 	function traverse(nums, result, limit, expr = [], numCount = 0, opeCount = 0) {
 		if (nums.length === 0 && numCount - opeCount === 1) {
+			self.postMessage({ message: `実行中... ${Math.ceil(++exprCount / exprTotalCount * 99)}%` });
 			if (Math.abs(calcRPN(expr) - result) < 0.001) {
 				const solution = rpn2in(expr);
 				if (!solutions.includes(solution)) {
